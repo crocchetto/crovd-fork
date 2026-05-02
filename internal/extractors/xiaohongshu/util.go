@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strings"
 
@@ -99,24 +100,14 @@ func removeImageWatermark(u string) string {
 		u = u[:idx]
 	}
 
-	const marker1 = "notes_pre_post/"
-	if idx := strings.Index(u, marker1); idx != -1 {
-		hash := u[idx+len(marker1):]
-		return "https://sns-img-hw.xhscdn.com/notes_pre_post/" + hash + "?imageView2/2/w/0/format/jpg"
+	parsed, err := url.Parse(u)
+	if err != nil {
+		return u
 	}
 
-	const marker2 = "spectrum/"
-	if idx := strings.Index(u, marker2); idx != -1 {
-		hash := u[idx+len(marker2):]
-		return "https://sns-img-hw.xhscdn.com/spectrum/" + hash + "?imageView2/2/w/0/format/jpg"
-	}
-
-	parts := strings.Split(u, "/")
-	if len(parts) > 0 {
-		hash := parts[len(parts)-1]
-		if hash != "" {
-			return "https://sns-img-hw.xhscdn.com/" + hash + "?imageView2/2/w/0/format/jpg"
-		}
+	parts := strings.SplitN(parsed.Path, "/", 4)
+	if len(parts) == 4 {
+		return "https://sns-img-hw.xhscdn.com/" + parts[3] + "?imageView2/2/w/0/format/jpg"
 	}
 
 	return u
