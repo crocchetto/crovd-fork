@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> **this repository has moved to [crocchetto/crovd](https://github.com/crocchetto/crovd).**
+> 
+> this old version is no longer maintained, please use the new repository for the latest features and updates.
+
 <h1 align="center">crovd</h1>
 <p align="center">
   <a href="https://t.me/crovd_bot">
